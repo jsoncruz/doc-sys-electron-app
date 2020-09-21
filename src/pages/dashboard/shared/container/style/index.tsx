@@ -8,22 +8,6 @@ interface ContainerProps extends PseudoBoxProps {
 }
 
 const Scrollable = styled(PseudoBox)`
-  ::-webkit-scrollbar {
-    width: 3px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #A0AEC0;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #718096;
-  }
-
   padding: 10px 0;
 
 `

@@ -1,19 +1,19 @@
 import React, { useCallback, useContext } from 'react'
 
 import {
-  IDrawer,
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerOverlay,
-  Text,
-  Box,
-  BoxProps,
   PseudoBoxProps,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
   PseudoBox,
-  Divider
+  BoxProps,
+  IDrawer,
+  Divider,
+  Drawer,
+  Text,
+  Box
 } from '@chakra-ui/core'
-import { AiOutlineFall } from 'react-icons/ai'
+import { AiOutlineFall, AiOutlineHistory } from 'react-icons/ai'
 import { BiUsb } from 'react-icons/bi'
 import { FiMenu } from 'react-icons/fi'
 import { IoIosLogOut } from 'react-icons/io'
@@ -84,6 +84,7 @@ const Menu: React.FC<MenuDrawerProps> = (props) => {
         <DrawerBody padding="0">
           <Item icon={AiOutlineFall} to="/">Dashboard</Item>
           <Item icon={BiUsb} to="/tokens">Configuração de Token</Item>
+          <Item icon={AiOutlineHistory} to="/history">Histórico de Assinaturas</Item>
           <Box
             onClick={signOut}
             position="absolute"

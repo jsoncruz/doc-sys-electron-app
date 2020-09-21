@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
 
-import { Grid, Flex, useColorMode, Image, Text, Stack, Box, GridProps, ButtonGroup, Button } from '@chakra-ui/core'
+import { Grid, Flex, useColorMode, Image, Text, Stack, Box, ButtonGroup, Button } from '@chakra-ui/core'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 
 import Menu, { Hamburguer } from '~/components/menu'
-import { drawerMenuState, windowTitle } from '~/global/atoms/index'
+import { drawerMenuState, windowTitle } from '~/global/atoms'
 import { titleBarSpecs } from '~/global/selectors'
 
-import { Documentos, Contratos, Empenhos, Avulsos, headers } from './documents'
+import { Documentos, Contratos, Empenhos, Avulsos, headers } from './shared'
 
 const Dashboard: React.FC = () => {
   const [isDrawerOpen, setDrawerState] = useRecoilState(drawerMenuState)
@@ -59,10 +59,8 @@ const Dashboard: React.FC = () => {
         </Flex>
         <Flex gridArea="quickly" justifyContent="flex-start" alignItems="center">
           <ButtonGroup spacing={4}>
-            <Button leftIcon="email" variantColor="purple" variant="solid">Solicitar Assinatura</Button>
-            <Button rightIcon="arrow-forward" variantColor="purple" variant="outline">
-              Call us
-            </Button>
+            <Button leftIcon="add" variantColor="teal" variant="outline">Solicitar Assinatura</Button>
+            <Button rightIcon="arrow-forward" variantColor="teal" variant="solid">Validar</Button>
           </ButtonGroup>
         </Flex>
         <Flex

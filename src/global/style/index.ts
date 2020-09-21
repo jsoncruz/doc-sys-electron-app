@@ -13,7 +13,22 @@ const customTheme: DefaultTheme = {
   }
 }
 
-const GlobalFonts = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #A0AEC0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+  }
   @font-face {
     font-family: Roboto;
     src: url(${RobotoRegular});
@@ -25,4 +40,4 @@ const GlobalFonts = createGlobalStyle`
 `
 
 export default customTheme
-export { GlobalFonts }
+export { GlobalStyles }

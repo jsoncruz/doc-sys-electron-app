@@ -2,10 +2,10 @@ import { AiFillFilePdf } from 'react-icons/ai'
 import { HiDocumentDuplicate, HiDocument } from 'react-icons/hi'
 import { IoIosAlert } from 'react-icons/io'
 
-import Avulsos from './template/avulsos'
-import Contratos from './template/contratos'
-import Documentos from './template/documentos'
-import Empenhos from './template/empenhos'
+import Avulsos from './container/avulsos'
+import Contratos from './container/contratos'
+import Documentos from './container/documentos'
+import Empenhos from './container/empenhos'
 
 export { Avulsos, Contratos, Empenhos, Documentos }
 

@@ -9,10 +9,10 @@ const AuthRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route to="/">
+        <Route path="/" exact>
           <Login />
         </Route>
-        <Route to="/registrar">
+        <Route path="/registrar">
           <Register />
         </Route>
       </Switch>
