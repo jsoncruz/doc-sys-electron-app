@@ -26,7 +26,7 @@ import mutate from '~/services/mutate'
 import {
   MultiplePendingSubscriptions,
   FetchPendingSubscriptionsProps
-} from '../typescript'
+} from '../types'
 
 import { PipeContext } from '..'
 

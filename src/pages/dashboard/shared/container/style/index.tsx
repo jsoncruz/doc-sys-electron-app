@@ -3,7 +3,7 @@ import React from 'react'
 import { PseudoBox, PseudoBoxProps, Skeleton } from '@chakra-ui/core'
 import styled from 'styled-components'
 
-interface ContainerProps extends PseudoBoxProps {
+export interface ContainerProps extends PseudoBoxProps {
   isLoaded: boolean;
 }
 

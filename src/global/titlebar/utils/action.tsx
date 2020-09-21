@@ -18,7 +18,7 @@ interface FrameActions {
   minimize(): void;
 }
 
-const Item: React.FC<PseudoBoxProps> = ({ children, ...rest }) => {
+export const Item: React.FC<PseudoBoxProps> = ({ children, ...rest }) => {
   const { height: rail } = useRecoilValue(titleBarSpecs)
   return (
     <PseudoBox

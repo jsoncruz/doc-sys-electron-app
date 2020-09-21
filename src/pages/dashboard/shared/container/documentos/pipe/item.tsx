@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 
 import {
   Menu,
@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom'
 import mutate from '~/services/mutate'
 
 import { Card } from '../../style'
-import { DocumentosProps } from '../typescript'
+import { DocumentosProps } from '../types'
 import FetchPendingSubscriptions from './subscriptions'
 
 interface PDFLinkageProps {
@@ -42,7 +42,7 @@ const Item: React.FC<DocumentosProps> = (props) => {
   }, [history, props.CodigoTramitacao])
 
   return (
-    <Menu closeOnSelect closeOnBlur autoSelect>
+    <Menu closeOnSelect closeOnBlur>
       <MenuButton as={Card}>
         <Stack isInline alignItems="center">
           <Text fontFamily="Roboto-Black" color="gray.900" fontSize="xs">
@@ -64,7 +64,7 @@ const Item: React.FC<DocumentosProps> = (props) => {
           aria-label="See More"
         />
       </MenuButton>
-      <MenuList>
+      <MenuList placement="bottom-end">
         <MenuItem onClick={handleSigning}>Assinar</MenuItem>
         <MenuItem onClick={handleReadableDocument}>Ver Documento</MenuItem>
       </MenuList>

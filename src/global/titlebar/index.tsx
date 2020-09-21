@@ -6,9 +6,9 @@ import { useRecoilValue } from 'recoil'
 
 import { windowTitle } from '../atoms/index'
 import { titleBarSpecs } from '../selectors/index'
-import Action from './addons/action'
-import Menu from './addons/menu'
-import { Container } from './addons/style'
+import Action from './utils/action'
+import Menu from './utils/menu'
+import { Container } from './utils/style'
 
 const TitleBar: React.FC = () => {
   const title = useRecoilValue(windowTitle)

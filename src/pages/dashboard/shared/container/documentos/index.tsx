@@ -14,7 +14,7 @@ import {
   ContextProps,
   DocumentosProps,
   MultiplePendingSubscriptions
-} from './typescript'
+} from './types'
 
 export const PipeContext = createContext<ContextProps>({} as ContextProps)
 

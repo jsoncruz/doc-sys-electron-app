@@ -1,23 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { usePdf } from '@mikecousins/react-pdf'
 import { useLocation } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
 
+import { windowTitle } from '~/global/atoms'
 import axios from '~/services/request'
 
 interface NavigationProps {
   LinkDocumento: string;
 }
 
-const PDFReader: React.FC<any> = () => {
+const PDFReader: React.FC = () => {
+  const setPageTitle = useSetRecoilState(windowTitle)
   const { state: { LinkDocumento } } = useLocation<NavigationProps>()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [PDFUrl, setPDFUrl] = useState<string>()
   const [page, setPage] = useState(1)
+
   const [loading, setLoading] = useState({
     percent: 0,
     status: true
   })
+
   const { pdfDocument, pdfPage } = usePdf({
     file: PDFUrl ?? LinkDocumento,
     page,
@@ -43,7 +48,17 @@ const PDFReader: React.FC<any> = () => {
       .catch((exception) => {
         throw new Error(exception)
       })
-  }, [LinkDocumento])
+  }, [LinkDocumento, setPageTitle])
+
+  useLayoutEffect(() => {
+    setPageTitle('Carregando...')
+  }, [setPageTitle])
+
+  useEffect(() => {
+    if (loading.status) {
+      setPageTitle('Lendo Documento')
+    }
+  }, [loading.status, setPageTitle])
 
   if (loading.status) {
     return (
