@@ -36,7 +36,10 @@ const FetchPendingSubscriptions: React.FC<FetchPendingSubscriptionsProps<APIProp
       setLoading(true)
       const data = await mutate<MultiplePendingSubscriptions>(props.service, {
         data: {
-          CodigoTramitacao: current.CodigoTramitacao
+          NoInstrumento: current.NoInstrumento,
+          CodigoTipo: current.CodigoTipo,
+          NoContrato: current.Numero,
+          AnoContrato: current.Ano
         }
       })
       setPending(data)
@@ -48,14 +51,14 @@ const FetchPendingSubscriptions: React.FC<FetchPendingSubscriptionsProps<APIProp
       }
       throw new Error(exception)
     }
-  }, [current, isLoading, onOpen, props.service])
+  }, [isLoading, onOpen, props.service, current, setPending])
 
   if (isOpen) {
     return (
       <Modal onClose={onClose} isOpen={isOpen} size="md" isCentered>
         <ModalOverlay />
         <ModalContent borderRadius="md">
-          <ModalHeader>{`${current.Situacao} - #${current.CodigoTramitacao}`}</ModalHeader>
+          <ModalHeader>{`Contrato ${current.NoContrato} - ${current.NoProcesso}`}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <List spacing={3}>

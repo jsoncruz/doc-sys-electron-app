@@ -41,8 +41,12 @@ const Item: React.FC<APIProps> = (props) => {
   const handleReadableDocument = useCallback(async () => {
     const data = await mutate<PDFLinkageProps>('/wsVerDoc.rule?sys=LEG', {
       data: {
-        TpDocumento: 'D',
-        CodigoTramitacao: props.CodigoTramitacao
+        TpDocumento: 'A',
+        NoDocumentoAvulso: props.NoDocumento,
+        TpDocumentoAvulso: props.TpDocumento,
+        CodigoUop: props.CodigoUop,
+        AnoDocumentoAvulso: props.AnoDocumento,
+        CodigoDocumentoAvulso: props.CodigoDocumentoAvulso
       },
       transformResponse: (response) => {
         response = JSON.parse(response)
@@ -52,17 +56,15 @@ const Item: React.FC<APIProps> = (props) => {
         return response
       }
     })
-    history.push('/reader', { ...data, document: props.NoProcesso })
-  }, [history, props.CodigoTramitacao, props.NoProcesso])
+    history.push('/reader', { ...data, document: props.NoDocumentoCompleto })
+  }, [history, props])
 
   const SigningPopup: React.FC = () => {
-    const { user: { nomeUsuario: nome } } = useContext(AuthContext)
+    const { user: { nomeUsuario } } = useContext(AuthContext)
     const { revalidate } = useContext(PipeContext)
     const [loading, setLoading] = useState(false)
     const [response, setResponse] = useState<ResponseOutput>()
     const unformRef = useRef<FormHandles>(null)
-
-    const { NomeMotivoFuturo: futuro, NoProcesso: no, CodigoTramitacao } = props
 
     const handleSubmit: SubmitHandler<TokenProps> = useCallback(async ({ pass }) => {
       try {
@@ -71,12 +73,16 @@ const Item: React.FC<APIProps> = (props) => {
           pass: Yup.string().required('Digite a senha do token')
         })
         await schema.validate({ pass }, { abortEarly: false })
-        const { data } = await axios.post<ResponseOutput>('/wsAssDoc.rule?sys=LEG', {
+        const { data } = await axios.post<ResponseOutput>('/wsAssAvu.rule?sys=LEG', {
           senha: pass,
           CodigoCadastro: props.CodigoAssinador,
           CodigoMotivo: props.CodigoMotivo,
           multipla: true,
-          CodigoTramitacao
+          CodigoUop: props.CodigoUop,
+          AnoDocumentoAvulso: props.AnoDocumento,
+          NoDocumentoAvulso: props.NoDocumento,
+          TpDocumentoAvulso: props.TpDocumento,
+          CodigoDocumentoAvulso: props.CodigoDocumentoAvulso
         })
         if (data.codigoSituacao === 3) {
           await revalidate()
@@ -95,7 +101,7 @@ const Item: React.FC<APIProps> = (props) => {
           setResponse({ codigoSituacao: 4, nomeSituacao: 'Houve um erro...' })
         }
       }
-    }, [CodigoTramitacao, revalidate])
+    }, [revalidate])
 
     return (
       <Modal onClose={onClose} isOpen={isOpen} size="lg" isCentered>
@@ -105,7 +111,7 @@ const Item: React.FC<APIProps> = (props) => {
           <ModalCloseButton />
           <ModalBody>
             <Text marginBottom={3}>
-              {`Eu, ${nome}, ${futuro.toLowerCase()}, referente ao processo ${no}, no tramite ${CodigoTramitacao}`}
+              {`Eu, ${nomeUsuario}, ${props.NomeMotivoFuturo.toLowerCase()}, referente ao processo ${props.NoDocumentoCompleto}`}
             </Text>
             <Form ref={unformRef} onSubmit={handleSubmit}>
               <Input
@@ -157,12 +163,9 @@ const Item: React.FC<APIProps> = (props) => {
         <MenuButton as={Card}>
           <Stack isInline alignItems="center">
             <Text fontFamily="Roboto-Black" color="gray.900" fontSize="xs">
-              {`${props.Situacao}: ${props.NoDocumento}`}
+              {`${props.NomeTipo}: ${props.NoDocumentoCompleto}`}
             </Text>
           </Stack>
-          <Text color="gray.900" fontSize="xs">
-            {`${props.NoProcesso} - #${props.CodigoTramitacao}`}
-          </Text>
           <Text color="gray.900" fontSize="xs">
             {`Motivo: ${props.NomeMotivo}`}
           </Text>
@@ -170,7 +173,7 @@ const Item: React.FC<APIProps> = (props) => {
             {`Solicitado em: ${props.DtSolicitacao}`}
           </Text>
           <FetchPendingSubscriptions
-            service="/wsConsAssDocPend.rule?sys=LEG"
+            service="/wsConsAssAvuPend.rule?sys=LEG"
             current={props}
             aria-label="See More"
           />

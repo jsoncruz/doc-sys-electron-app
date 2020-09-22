@@ -3,7 +3,7 @@ import React from 'react'
 import { PseudoBox, PseudoBoxProps } from '@chakra-ui/core'
 import { useRecoilValue } from 'recoil'
 
-import { titleBarSpecs } from '../selectors/index'
+import { titleBarSpecs } from '~/global/selectors'
 
 const Body: React.FC<PseudoBoxProps> = (props) => {
   const { height } = useRecoilValue(titleBarSpecs)

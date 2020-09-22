@@ -2,18 +2,18 @@ import React from 'react'
 
 export interface APIProps {
   DtSolicitacao: string;
-  Situacao: string;
   NomeMotivo: string;
   Documento: string;
-  CodigoTramitacao: number;
-  CodigoAssinador: number;
-  LocalFisico: string;
-  NoProcesso: string;
   CodigoMotivo: number;
   NomeMotivoFuturo: string;
-  Vistado: null | string;
+  NoEmpenho: string;
+  Cargo: string | null;
+  NoProcesso: string;
+  CodigoAssinador: number;
+  LocalFisico: string;
+  NomeEmpresa: string;
+  Vistado: string | null;
   Status: 'S' | 'N';
-  NoDocumento: string;
 }
 
 export interface ContextProps {

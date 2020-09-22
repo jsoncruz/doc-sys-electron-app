@@ -3,8 +3,8 @@ import { mutate as mutation } from 'swr'
 
 import { fetcher } from './request'
 
-const mutate = async <Response = Promise<any>>(url: string, config?: AxiosRequestConfig) => {
-  const data: Response = await mutation(url, fetcher.bind(this, url, config))
+const mutate = async <Response = Promise<any>>(url: string, config?: AxiosRequestConfig, shouldRevalidate?: boolean) => {
+  const data: Response = await mutation(url, fetcher.bind(this, url, config), shouldRevalidate)
   return data
 }
 

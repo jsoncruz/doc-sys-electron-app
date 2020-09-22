@@ -11,7 +11,6 @@ interface ForthAndBackProps {
 
 const ForthAndBack: React.FC<ForthAndBackProps> = ({ isVisible }) => {
   const history = useHistory()
-  console.log('history', history)
   const handleForth = useCallback(() => history.goForward(), [history])
   const handleBack = useCallback(() => history.goBack(), [history])
   return (

@@ -4,8 +4,9 @@ import { Text } from '@chakra-ui/core'
 import os from 'os'
 import { useRecoilValue } from 'recoil'
 
-import { windowTitle } from '../atoms/index'
-import { titleBarSpecs } from '../selectors/index'
+import { windowTitle } from '~/global/atoms'
+import { titleBarSpecs } from '~/global/selectors'
+
 import Action from './utils/action'
 import Menu from './utils/menu'
 import { Container } from './utils/style'

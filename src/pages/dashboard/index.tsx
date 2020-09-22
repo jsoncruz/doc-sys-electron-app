@@ -1,19 +1,62 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 
-import { Grid, Flex, useColorMode, Image, Text, Stack, Box, ButtonGroup, Button } from '@chakra-ui/core'
+import {
+  useColorMode,
+  ButtonGroup,
+  Button,
+  Image,
+  Badge,
+  Stack,
+  Grid,
+  Flex,
+  Text,
+  Box
+} from '@chakra-ui/core'
+import { AiFillFilePdf } from 'react-icons/ai'
+import { HiDocumentDuplicate, HiDocument } from 'react-icons/hi'
+import { IoIosAlert } from 'react-icons/io'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 
 import Menu, { Hamburguer } from '~/components/menu'
 import { drawerMenuState, windowTitle } from '~/global/atoms'
 import { titleBarSpecs } from '~/global/selectors'
 
-import { Documentos, Contratos, Empenhos, Avulsos, headers } from './shared'
+import DashboardProvider, { DashboardContext } from './context'
+import { Documentos, Contratos, Empenhos, Avulsos } from './shared'
 
-const Dashboard: React.FC = () => {
+const Content: React.FC = () => {
+  const { documentos, contratos, empenhos, avulsos } = useContext(DashboardContext)
   const [isDrawerOpen, setDrawerState] = useRecoilState(drawerMenuState)
   const { height: titleBarSize } = useRecoilValue(titleBarSpecs)
   const { colorMode } = useColorMode()
   const setPageTitle = useSetRecoilState(windowTitle)
+
+  const headers = [
+    {
+      area: 'titulo-documento',
+      title: 'Documentos',
+      icon: AiFillFilePdf,
+      amount: documentos
+    },
+    {
+      area: 'titulo-contrato',
+      title: 'Contratos',
+      icon: HiDocumentDuplicate,
+      amount: contratos
+    },
+    {
+      area: 'titulo-empenho',
+      title: 'Empenhos',
+      icon: IoIosAlert,
+      amount: empenhos
+    },
+    {
+      area: 'titulo-avulso',
+      title: 'Avulsos',
+      icon: HiDocument,
+      amount: avulsos
+    }
+  ]
 
   useEffect(() => {
     setPageTitle('Dashboard de Assinaturas')
@@ -99,10 +142,17 @@ const Dashboard: React.FC = () => {
           'documentos contratos empenhos avulsos'
         "
       >
-        {headers.map(({ area, title, icon }) => (
-          <Stack key={area} gridArea={area} isInline justifyContent="center" alignItems="center">
+        {headers.map(({ area, title, icon, amount }) => (
+          <Stack
+            isInline
+            key={area}
+            gridArea={area}
+            justifyContent="center"
+            alignItems="center"
+          >
             <Box as={icon} />
             <Text fontFamily="Roboto-Black">{title}</Text>
+            <Badge variantColor="teal">{amount}</Badge>
           </Stack>
         ))}
         <Flex gridArea="documentos" padding="0 5px 15px 15px">
@@ -122,4 +172,10 @@ const Dashboard: React.FC = () => {
   )
 }
 
-export default Dashboard
+export default function Dashboard () {
+  return (
+    <DashboardProvider>
+      <Content />
+    </DashboardProvider>
+  )
+}

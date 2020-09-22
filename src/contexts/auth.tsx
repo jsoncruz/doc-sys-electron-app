@@ -66,9 +66,9 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const signOut = useRecoilCallback(({ reset }) => async () => {
     localStorage.removeItem('@User')
+    setUser(undefined)
     reset(windowTitle)
     reset(drawerMenuState)
-    setUser(undefined)
   }, [])
 
   if (loading) {

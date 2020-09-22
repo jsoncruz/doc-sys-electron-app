@@ -8,7 +8,6 @@ import {
   PseudoBox,
   BoxProps,
   IDrawer,
-  Divider,
   Drawer,
   Text,
   Box
@@ -18,7 +17,7 @@ import { BiUsb } from 'react-icons/bi'
 import { FiMenu } from 'react-icons/fi'
 import { IoIosLogOut } from 'react-icons/io'
 import { IconType } from 'react-icons/lib'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 
 import { AuthContext } from '~/contexts/auth'
@@ -40,6 +39,7 @@ interface ItemProps extends PseudoBoxProps {
 
 const Item: React.FC<ItemProps> = ({ children, icon, to, ...rest }) => {
   const history = useHistory()
+  const { pathname } = useLocation()
   const setDrawerState = useSetRecoilState(drawerMenuState)
 
   const handleClickAction = useCallback(() => {
@@ -58,6 +58,7 @@ const Item: React.FC<ItemProps> = ({ children, icon, to, ...rest }) => {
         padding="12px 10px"
         transition="background-color 0.15s linear"
         userSelect="none"
+        backgroundColor={pathname === to ? 'orange.800' : 'ghost'}
         _hover={{
           cursor: 'pointer',
           backgroundColor: 'orange.500'
@@ -69,7 +70,6 @@ const Item: React.FC<ItemProps> = ({ children, icon, to, ...rest }) => {
           {children}
         </Text>
       </PseudoBox>
-      <Divider />
     </>
   )
 }
@@ -83,8 +83,8 @@ const Menu: React.FC<MenuDrawerProps> = (props) => {
         {tipoCadastro === 2 ? <PhysicalPerson /> : <LegalPerson />}
         <DrawerBody padding="0">
           <Item icon={AiOutlineFall} to="/">Dashboard</Item>
-          <Item icon={BiUsb} to="/tokens">Configuração de Token</Item>
           <Item icon={AiOutlineHistory} to="/history">Histórico de Assinaturas</Item>
+          <Item icon={BiUsb} to="/tokens">Configuração de Token</Item>
           <Box
             onClick={signOut}
             position="absolute"
